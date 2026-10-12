@@ -1,0 +1,280 @@
+{
+  "product": "DOARDS",
+  "createdAt": "2026-10-12T22:11:23.183Z",
+  "databaseIncluded": false,
+  "secretsIncluded": false,
+  "files": [
+    {
+      "path": ".dockerignore",
+      "sha256": "e5378cb7dc7d5644cb2c26aa80092a8c1afec3b759bb3c079f9c3cce83b61993"
+    },
+    {
+      "path": ".env.backend.example",
+      "sha256": "9dc850127a92de6e40acc46dfeadb8e935a59c1ec484f40e1e1d68d92903874e"
+    },
+    {
+      "path": ".env.example",
+      "sha256": "f4f9f51308a7b43079fd6028965fe9b19c9ab08dfc65050cce8f0ab81658d050"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "1fef98f48663be1af1b923996c877afa259bed0127d3c8b8007358ac15f6e5a1"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "281391eecc2cd45a04f039aef4c23fcdb1e57fbd8f296041be15ca29a7b979d9"
+    },
+    {
+      "path": ".nvmrc",
+      "sha256": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53"
+    },
+    {
+      "path": ".stackblitzrc",
+      "sha256": "83bbd887c89288b413b477c5b82bc09430bd0830f41b5af3c7ac0e135a27be23"
+    },
+    {
+      "path": "api/[...path].mjs",
+      "sha256": "7fda0041aacf474bebe0dc0e4bbf5feadc5b22c8aa5d9317389d8e6a74be0485"
+    },
+    {
+      "path": "APP_README.md",
+      "sha256": "3a40240436af89752c2ee3ed0ba912f20d5150ad692612c9191839ea426f61e8"
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "d4ce9cae5bce9a8748905332c531b188caaa3da5dd45726f0f3fbc90fcb88167"
+    },
+    {
+      "path": "deployment/dev.mjs",
+      "sha256": "a608646e72c9a434cbf64807aac744078d5c84a05b0aadcaea6c56bf29e33bb5"
+    },
+    {
+      "path": "deployment/proxy.mjs",
+      "sha256": "3fd2e383854686a0863a61ac687f4d6fe26c22510a9290e5af4579a5efaadbc2"
+    },
+    {
+      "path": "deployment/proxy.test.mjs",
+      "sha256": "0afd895b9148e4b01414f54652e6da1b1467b185f8c96389d029f0f6e6581ad7"
+    },
+    {
+      "path": "Dockerfile",
+      "sha256": "1c14c36c7c008ac1b5fb39b14e969f063b8a6cb0658aea396d32d093fd660347"
+    },
+    {
+      "path": "index.html",
+      "sha256": "34c5bac2f21385e4d789c585627313bbd954e40964e1058a785b30ae50176091"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "69edfc9c928fcfd593eca49112bac357643170f880156d7f4a07f6e5a63ba2d5"
+    },
+    {
+      "path": "package.json",
+      "sha256": "19b22f5ee7be56c757f516ed2fe45e039e962330925da1e6ea2cfe09d2c413a8"
+    },
+    {
+      "path": "public/brand-reference.png",
+      "sha256": "26cbd95cd59e24235fae84bf5490e5d2e10d59c6b3cb55b83cffdec9f40db49a"
+    },
+    {
+      "path": "public/credits.html",
+      "sha256": "186139b30f2a811324cd32f8e02de586658070ddca1693ce8b924399820945c8"
+    },
+    {
+      "path": "public/icon-192.png",
+      "sha256": "a159292f33a3c2b7424aa7aadce4541653bbbf2a50c5c2e00723eba3081440a4"
+    },
+    {
+      "path": "public/icon-512.png",
+      "sha256": "fbbfa5d776c66411b5d8a1d11c093196eec415528a6cb7ad0e49b6159c85fd9d"
+    },
+    {
+      "path": "public/icon.svg",
+      "sha256": "74954644a86d410fe774b8655814c1488c251e4193ee4ce480ec8bc8862fa296"
+    },
+    {
+      "path": "public/manifest.webmanifest",
+      "sha256": "4e9058b08e30e3eb9dc4c5effa9b4658c0aea952c6260fd47eab0992df055c49"
+    },
+    {
+      "path": "public/offline.html",
+      "sha256": "795700372688a69992d02b6b457e84baf810d00b5d03c7fc3855428e7a4cdad9"
+    },
+    {
+      "path": "public/sw.js",
+      "sha256": "575b00af95011e330541543d1896926b9179fee431bc11cf58705ef1a287dbd3"
+    },
+    {
+      "path": "public/vehicle-bmw.jpg",
+      "sha256": "7c3b4996a5712f8e7006536659524ceb3e42ec8dae5769314fbde2d545eb30ba"
+    },
+    {
+      "path": "public/vehicle-vito-demo.jpg",
+      "sha256": "1e4bbbbe8765d846cea02316ed210dbcd9edb9976a77d60109c71e60147905b3"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0bdf24d43f5698b997bf42c3388244c291aab354f19205b1ef6c48053c7f3d38"
+    },
+    {
+      "path": "REQUIREMENTS.md",
+      "sha256": "7b76be10812b66d84f0c255bebbeae6fd627f51ae399a960f673fca005fbcddb"
+    },
+    {
+      "path": "server/assistant.mjs",
+      "sha256": "12fcc329add9e4bb506fa5601d5f485754d170fdbd65c1ded2aa13b996b7c477"
+    },
+    {
+      "path": "server/automation-rules.mjs",
+      "sha256": "10b5cad1baa3aeda673b551093424d8734274c5a6cea597cf98a6a48f7cfb43b"
+    },
+    {
+      "path": "server/automation.mjs",
+      "sha256": "6a5422b079778de7d50b4af9805eec3ee73ab5e3d3dfef43d3ff4f7cccc09741"
+    },
+    {
+      "path": "server/client-demo.test.mjs",
+      "sha256": "b27c34e5d55850f375d47c30699ef71aefed68084133bccfb3abe6803cfe3511"
+    },
+    {
+      "path": "server/demo.mjs",
+      "sha256": "c1567fa5fb53aa81c5f538d2e64d5234b322176b4b35cf03ca753c4bc30552e7"
+    },
+    {
+      "path": "server/dev.mjs",
+      "sha256": "baa86b496f9659fea26010fbafbf34e0db5ef41fbd7d65ec6b931fe42428ce72"
+    },
+    {
+      "path": "server/domain.mjs",
+      "sha256": "131b08318c6261b9ffcf099370155f38e4d00fdb09cd1e436310aa6fa02da564"
+    },
+    {
+      "path": "server/domain.test.mjs",
+      "sha256": "dacf2a6f3b4204f74566b6ee96f2ef19857c3e379d4b8466b8781bae7bcba6b0"
+    },
+    {
+      "path": "server/http.test.mjs",
+      "sha256": "e9504696e58963345b89949d16d4241fb92bab9dfe61881c0339c811685af2b0"
+    },
+    {
+      "path": "server/index.mjs",
+      "sha256": "f6a7679baef2149080b3a10bbc974b87d96ca65705335dee2ca2211b63144582"
+    },
+    {
+      "path": "server/intelligence.test.mjs",
+      "sha256": "af0b332501f3be03bf32a740f60b6b30caea67c239c229d73227ba715269f97c"
+    },
+    {
+      "path": "server/portals.test.mjs",
+      "sha256": "51dd7e5c01f5592a789d4f150638cd4ffb865c235d466c94e53db1ae863b9892"
+    },
+    {
+      "path": "server/seed.mjs",
+      "sha256": "1f6f88983706bae1762bfc0fd5968268837ae21adf93cdd1366b1fc18a409863"
+    },
+    {
+      "path": "server/store.mjs",
+      "sha256": "79952cb7656f0f400c4528001107da1660d50fcd7b64a98cf79f61d5c49c2a30"
+    },
+    {
+      "path": "src/AccessEditor.tsx",
+      "sha256": "fe7aea4183d98d155bfcb8345ea22b75077f8cfc4094577af0f3e98429ef9991"
+    },
+    {
+      "path": "src/App.tsx",
+      "sha256": "7ca55ea91c4ec57a2b8f720af09ce1ada45ee9d2325ddc892c15d8ec834d121d"
+    },
+    {
+      "path": "src/Collaboration.tsx",
+      "sha256": "fd9e541294eb136e68677aafd05f21fe945dd0c4f1da9c0776ef323b353c798c"
+    },
+    {
+      "path": "src/core.tsx",
+      "sha256": "a571125c8d6a3f49d96534302d368c584c1332a3d8716de1750c22e6b3819d42"
+    },
+    {
+      "path": "src/data.ts",
+      "sha256": "19cd96a365924fce3097979eabfa26c378ec8bf7887f5e53018f0a55f0035178"
+    },
+    {
+      "path": "src/forms.tsx",
+      "sha256": "ab7c7da0d156ef18a06c7f71086a62b288dfa97180e561eadd7e2113702dac50"
+    },
+    {
+      "path": "src/i18n.tsx",
+      "sha256": "d5f8dde7f4ebda594ee8fc1a87edef2ff66df5035c875702b4efce7c00027ee9"
+    },
+    {
+      "path": "src/Intelligence.tsx",
+      "sha256": "d5ff4660f04ccf25ab7bea0133b970f7479ab4e33068c623861b0c9a73ad80c8"
+    },
+    {
+      "path": "src/main.tsx",
+      "sha256": "ad793c843be7afbcc2e16006450aa93fd0936c32f3c8f2763c18fd845d9a42d6"
+    },
+    {
+      "path": "src/Portals.tsx",
+      "sha256": "6f0613e31d34b7c0097d20b84fb4027cd552fd446b7c55746c5143fde0698c98"
+    },
+    {
+      "path": "src/styles.css",
+      "sha256": "2982a29c841e6ff7ea976f7e5e93dd4081304fcead6e395c478f270c8414574b"
+    },
+    {
+      "path": "src/types.ts",
+      "sha256": "f64a728535dc7a06ff63fc1528e3434c9db7545b6bb5853359fc0ae872083464"
+    },
+    {
+      "path": "src/ui.tsx",
+      "sha256": "66f994a539fbb499c21dd2831d7eb73b45403ec2e97da8c282dadaa3ea2f55d5"
+    },
+    {
+      "path": "src/utils.ts",
+      "sha256": "5a40473e9bc2de9104d5652a4c4b8c5029930ac4ce686b49fbb25f29ef6000bc"
+    },
+    {
+      "path": "src/VehicleDetail.tsx",
+      "sha256": "d2c4ce50ceb1c9ddd06fef0d070894b46a0a2aac77709b0bb84f612fd75a8e64"
+    },
+    {
+      "path": "src/views.tsx",
+      "sha256": "e27cc9337b9d5416ba662b1f7d5f6e0e80c8c157b22c2aca0b80dba3d399cb51"
+    },
+    {
+      "path": "src/workspaces.css",
+      "sha256": "9fbff67f8c50779cb50cc620782418faab4591321c44e441e396ab97a21635fb"
+    },
+    {
+      "path": "tests/client-demo.mjs",
+      "sha256": "4680e9188a941f121f96e1cabc80c757dc637247984f98fcb4669249be1651d1"
+    },
+    {
+      "path": "tests/e2e.mjs",
+      "sha256": "2d54eb152d6cb0ec0802268de74823d82b139a6559a23ab38a7b7c491a772bfe"
+    },
+    {
+      "path": "tests/intelligence.mjs",
+      "sha256": "448954903f46b7af95b3ec125ded0b0dbfa388f5a77f5754196edb318a3d7d63"
+    },
+    {
+      "path": "tests/portals.mjs",
+      "sha256": "097ddb51987fb4c702daa537cfc978546ecb5536f01005dbd7fc6cd623637898"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "cda247679793708e5744f3ccf3bc7d4b37d5886bcf0c5bc80c621fe7e6a9fa58"
+    },
+    {
+      "path": "tsconfig.node.json",
+      "sha256": "1a45dc2c95d8f5d165e96e83da7ab324f9d7e7fa3060eea9226fd9b925ee19b8"
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "82c34e01634c74042ba5fbb7fc27e6e769f032f4a8d335a0503c86eb7011e11a"
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "ee2d3e9ae451e85bb8d5fad77d5bdb19c835e8378b483e050dfccb5dbd74a517"
+    }
+  ]
+}

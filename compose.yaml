@@ -1,0 +1,13 @@
+services:
+  doards:
+    build: .
+    restart: unless-stopped
+    env_file: .env.backend
+    environment:
+      DOARDS_DB: /app/data/doards.sqlite
+    ports:
+      - "127.0.0.1:4319:4319"
+    volumes:
+      - doards_data:/app/data
+volumes:
+  doards_data:

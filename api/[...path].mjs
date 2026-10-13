@@ -13,7 +13,7 @@ export default async function api(req, res) {
     ).createCloudHandler();
     return await handler(req, res);
   } catch (error) {
-    console.error("DOARDS API initialization failed", error.code || error.name);
+    console.error("DOARDS API initialization failed", error.message === "databaseNotConfigured" ? "DATABASE_URL must be a PostgreSQL connection URI" : error.code || error.name);
     res.writeHead(503, {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",

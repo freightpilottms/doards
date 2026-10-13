@@ -200,7 +200,7 @@ export async function createApp({
                   apps: appAccess(u),
                 }
               : null,
-            demo: demo && (!demoLoginAuthorized || !!u),
+            demo,
             publicDemo: demo && publicDemo,
             setup:
               setupEnabled &&

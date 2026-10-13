@@ -1,7 +1,7 @@
 {
   "product": "DOARDS",
   "database": "Supabase PostgreSQL",
-  "createdAt": "2026-10-13T01:20:13.770Z",
+  "createdAt": "2026-10-13T01:53:18.848Z",
   "dataIncluded": false,
   "secretsIncluded": false,
   "files": [
@@ -19,7 +19,7 @@
     },
     {
       "path": "api/[...path].mjs",
-      "sha256": "753503b655b143bd14c838e7dc6f5c2e0bc9a57515e1e3f54611d6714ee96419"
+      "sha256": "8f142cec3c86e96a154bda1b4d0be85145d22cb74666d3ee5dc374007d1892c8"
     },
     {
       "path": "deployment/build-brand-icons.mjs",

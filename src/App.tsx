@@ -39,7 +39,7 @@ import { Chat, NotificationCenter } from "./Collaboration";
 import {
   AppSwitcher,
   ClientHome,
-  DeviceGate,
+  DesktopPortal,
   ClientDemoProfiles,
   PortalNavigation,
   WorkshopHome,
@@ -193,10 +193,21 @@ export default function App() {
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
-  const [lang, setLang] = useState<Language>(() => {
-    const l = localStorage.getItem("doards:language");
-    return ["bs", "de", "en"].includes(l || "") ? (l as Language) : "bs";
-  });
+  if (surface !== "board" && wide) {
+    return (
+      <DesktopPortal
+        title={translate(
+          "de",
+          surface === "clients" ? "clientsApp" : "workshopApp",
+        )}
+      />
+    );
+  }
+  return <Application />;
+}
+
+function Application() {
+  const [lang, setLang] = useState<Language>("de");
   const t = useCallback((key: string) => translate(lang, key), [lang]);
   const [session, setSession] = useState<{
       user: unknown;
@@ -218,7 +229,6 @@ export default function App() {
   const mutation = useRef(0),
     toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => {
-    localStorage.setItem("doards:language", lang);
     document.documentElement.lang = lang;
   }, [lang]);
   const refresh = useCallback(async () => {
@@ -321,12 +331,6 @@ export default function App() {
       </select>
     </label>
   );
-  if (surface !== "board" && wide)
-    return (
-      <I18nContext.Provider value={{ lang, t }}>
-        <DeviceGate demo={!!session?.demo} />
-      </I18nContext.Provider>
-    );
   if (!data)
     return (
       <I18nContext.Provider value={{ lang, t }}>
@@ -645,13 +649,9 @@ export default function App() {
             </main>
             <footer className="app-footer">
               <span>
-                DOARDS <small>· S&S Fahrzeugverleih</small>
+                &copy; {new Date().getFullYear()} AK Solutions | ZEDA'S Group
+                LTD
               </span>
-              {session?.demo && (
-                <a href="/credits.html" target="_blank" rel="noreferrer">
-                  {t("imageCredits")}
-                </a>
-              )}
               <span className="connection">
                 <i />
                 {t(data.user.role)}

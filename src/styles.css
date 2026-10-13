@@ -16,6 +16,10 @@
   --green: #168564;
   --red: #d35159;
   --amber: #b98220;
+  --control-height: 40px;
+  --control-height-small: 32px;
+  --section-gap: 24px;
+  --field-gap: 16px;
   letter-spacing: 0;
   color-scheme: light;
 }
@@ -188,18 +192,18 @@ strong {
   border-bottom: 1px solid #ffffff0b;
 }
 .brand {
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   width: 164px;
   height: 44px;
   flex-shrink: 0;
 }
 .brand img {
-  position: absolute;
-  width: 1024px;
-  max-width: none;
-  left: 0;
-  top: -1px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .workspace-name {
   display: flex;
@@ -533,7 +537,7 @@ main {
 }
 .heading-actions > select {
   width: 132px;
-  height: 35px;
+  min-height: var(--control-height);
   font-size: 11px;
 }
 .heading-count {
@@ -618,6 +622,7 @@ main {
 }
 .stat-top {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -625,6 +630,8 @@ main {
   color: #6d7a8a;
 }
 .stat-top svg {
+  flex-shrink: 0;
+  margin-left: auto;
   color: var(--blue);
 }
 .stat strong {
@@ -707,7 +714,7 @@ main {
   min-width: 0;
   padding: 0 0 18px;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 20px;
+  margin-bottom: var(--section-gap);
 }
 .section-head {
   display: flex;
@@ -716,6 +723,7 @@ main {
   gap: 10px;
   margin-bottom: 15px;
   min-height: 25px;
+  flex-wrap: wrap;
 }
 .section-head h2 {
   font-size: 13px;
@@ -1052,11 +1060,13 @@ tbody tr:hover {
   max-width: 330px;
   white-space: normal;
   overflow-wrap: anywhere;
+  min-width: 120px;
 }
 .vehicle-cell {
   display: flex;
   align-items: center;
   gap: 11px;
+  min-width: 220px;
 }
 .vehicle-cell strong {
   display: block;
@@ -1120,7 +1130,7 @@ tbody tr:hover {
 }
 .filters input,
 .filters select {
-  height: 36px;
+  min-height: var(--control-height);
   font-size: 11px;
 }
 .row-actions {
@@ -1139,6 +1149,8 @@ tbody tr:hover {
 }
 .app-footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid var(--line);
@@ -1679,8 +1691,9 @@ tbody tr:hover {
 }
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 20px var(--field-gap);
   margin-bottom: 18px;
 }
 .form-grid > .full {
@@ -1700,6 +1713,8 @@ tbody tr:hover {
   bottom: 0;
   background: #fff;
   z-index: 4;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 .form-error {
   font-size: 12px;
@@ -2365,9 +2380,6 @@ tbody tr:hover {
   .stats-grid > .stat:first-child {
     grid-column: 1/-1;
     min-height: 90px;
-  }
-  .stats-grid > .stat:first-child .stat-top {
-    max-width: 160px;
   }
   .stats-grid.three {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -20,7 +20,12 @@ import type { RecordData, Vehicle } from "./types";
 export function Brand() {
   return (
     <div className="brand" aria-label="DOARDS S&S Fahrzeugverleih">
-      <img src="/brand-reference.png" alt="DOARDS · S&S Fahrzeugverleih" />
+      <img
+        src="/doards-logo.png"
+        alt="DOARDS S&S Fahrzeugverleih"
+        width="164"
+        height="44"
+      />
     </div>
   );
 }

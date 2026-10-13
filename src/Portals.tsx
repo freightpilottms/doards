@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   Smartphone,
   Wrench,
-  ArrowLeft,
   ArrowUpRight,
   PenLine,
   CalendarDays,
@@ -23,47 +22,21 @@ import {
 } from "lucide-react";
 import { api, surface, useApp } from "./core";
 import { useI18n } from "./i18n";
-import { Badge, Brand, IconButton, VehiclePhoto, Modal, Empty } from "./ui";
+import { Badge, Brand, IconButton, VehiclePhoto, Empty } from "./ui";
 import { dateText, locale } from "./utils";
 const number = (value: number, lang: Parameters<typeof locale>[0]) =>
   value.toLocaleString(locale(lang));
 import type { View } from "./types";
 
-export function DeviceGate({ demo = false }: { demo?: boolean }) {
-  const { t } = useI18n();
-  const [preview, setPreview] = useState(false);
+export function DesktopPortal({ title }: { title: string }) {
   return (
-    <div className="device-gate">
-      <Brand />
-      <Smartphone size={56} />
-      <h1>{t(surface === "clients" ? "clientsApp" : "workshopApp")}</h1>
-      <p>{t("mobileTabletOnly")}</p>
-      <code>
-        {location.origin}/{surface}
-      </code>
-      {demo && (
-        <button className="button primary" onClick={() => setPreview(true)}>
-          <Smartphone size={18} />
-          {t("tabletPreview")}
-        </button>
-      )}
-      <a className="button" href="/">
-        <ArrowLeft size={16} />
-        {t("primaryBoard")}
-      </a>
-      {preview && (
-        <Modal
-          title={t("tabletPreview")}
-          wide
-          onClose={() => setPreview(false)}
-        >
-          <iframe
-            className="portal-demo-frame"
-            title={t(surface === "clients" ? "clientsApp" : "workshopApp")}
-            src={`/${surface}`}
-          />
-        </Modal>
-      )}
+    <div className="portal-desktop">
+      <iframe
+        className="portal-mobile-frame"
+        title={title}
+        src={`${location.pathname}${location.search}${location.hash}`}
+        allow="geolocation; microphone; camera"
+      />
     </div>
   );
 }
@@ -123,6 +96,7 @@ export function AppSwitcher() {
           <a
             key={k}
             href={k === "board" ? "/" : `/${k}`}
+            target="_top"
             className={surface === k ? "current" : ""}
           >
             {k === "board" ? (
@@ -595,6 +569,8 @@ export function WorkshopHome() {
         <div className="portal-activity">
           {data.tasks
             .filter((x) => !x.done)
+            .sort((a, b) => String(a.due).localeCompare(String(b.due)))
+            .slice(0, 6)
             .map((task) => (
               <button key={task.id} onClick={() => go("calendar")}>
                 <ClipboardCheck size={19} />

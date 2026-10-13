@@ -1,6 +1,6 @@
 .button,
 .icon-button {
-  min-height: 40px;
+  min-height: var(--control-height);
   border-radius: 5px;
   font-size: 13px;
   font-weight: 600;
@@ -13,11 +13,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 18px;
 }
 .icon-button {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: var(--control-height);
+  height: var(--control-height);
+  flex: 0 0 var(--control-height);
   padding: 9px;
 }
 .icon-button.primary {
@@ -29,19 +33,172 @@
   width: 17px;
   height: 17px;
 }
+.button.small {
+  min-height: var(--control-height-small);
+  padding: 6px 10px;
+  line-height: 18px;
+  font-size: 11px;
+}
+.heading-actions,
+.vehicle-actions,
+.photo-actions {
+  align-items: stretch;
+  gap: 8px;
+}
+.heading-actions > select,
+.filters input,
+.filters select {
+  height: var(--control-height);
+  padding-block: 8px;
+  line-height: 20px;
+}
+.heading-actions > .segmented,
+.section-head > .segmented {
+  margin-bottom: 0;
+}
+.page-heading > *,
+.section-head > *,
+.form-grid > label {
+  min-width: 0;
+}
+.page-heading h1,
+.section-head h2 {
+  overflow-wrap: anywhere;
+}
+.section-head .badge,
+.section-head > .icon-button {
+  flex-shrink: 0;
+}
+.section-head > .text-action,
+.section-head > .text-button {
+  margin-left: auto;
+}
+.form-body {
+  min-width: 0;
+}
+.form-grid input:not([type="checkbox"]):not([type="range"]),
+.form-grid select {
+  min-height: var(--control-height);
+}
+.form-grid > label > span {
+  overflow-wrap: anywhere;
+}
+.form-grid > .check-label {
+  min-height: var(--control-height);
+  align-self: end;
+}
+main .section > form > .form-body {
+  padding: 8px 0 20px;
+}
+main .section > form > .form-footer {
+  position: static;
+  padding: 16px 0 0;
+  background: transparent;
+}
+.form-body > .form-grid:last-child {
+  margin-bottom: 0;
+}
+.section > .check-label + p {
+  margin-top: 12px;
+}
+.dashboard-top,
+.dashboard-bottom {
+  gap: var(--section-gap);
+}
+.dashboard-top > .section,
+.dashboard-bottom > .section {
+  margin-bottom: 0;
+}
+.assistant-status + p,
+.assistant-composer + p {
+  margin-top: 12px;
+}
+.assistant-answer footer {
+  flex-wrap: wrap;
+}
 .actions {
   gap: 8px;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 .page-heading {
   min-height: 64px;
   gap: 16px;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 .page-heading h1 {
   margin: 3px 0;
   font-size: 26px;
+}
+.page-heading > .actions,
+.page-heading > .heading-actions {
+  width: auto;
+  max-width: 100%;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+.collection-heading {
+  flex-wrap: wrap;
+}
+.collection-heading h1 {
+  margin: 0;
+}
+.dashboard-heading > .heading-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 356px;
+  gap: 12px;
+}
+.dashboard-heading .heading-actions > .button {
+  height: var(--control-height);
+  padding: 8px 6px;
+  gap: 4px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.dashboard-heading .heading-actions > .button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.dashboard-period {
+  position: relative;
+  min-width: 0;
+}
+.dashboard-period select {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  min-height: var(--control-height);
+  padding: 10px 24px;
+  text-align: center;
+  text-align-last: center;
+  font-size: 13px;
+  line-height: 18px;
+}
+.dashboard-period > svg {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .dashboard-heading > .heading-actions {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-period select {
+    font-size: 12px;
+  }
+}
+.collection-heading > .actions {
+  max-width: 100%;
+  margin-left: auto;
+  justify-content: flex-end;
 }
 .eyebrow {
   font-size: 11px;
@@ -70,6 +227,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  justify-content: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .segmented button.active {
   background: #fff;
@@ -506,12 +666,14 @@
 .leaflet-container a {
   color: #245f99;
 }
-.portal-demo-frame {
+.portal-mobile-frame {
   display: block;
-  width: 100%;
-  height: min(76vh, 920px);
-  border: 1px solid var(--border, #dce3e3);
-  background: #f8fafb;
+  width: min(480px, 100%);
+  height: 100dvh;
+  margin-inline: auto;
+  border: 0;
+  border-inline: 1px solid var(--line);
+  background: var(--bg);
 }
 .client-demo-profiles {
   display: flex;
@@ -624,39 +786,10 @@
     flex: 1;
   }
 }
-.device-gate {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  align-items: center;
-  justify-content: center;
-  padding: 36px;
-  background: #f4f6f8;
-  text-align: center;
-}
-.device-gate .brand {
-  background: #17283a;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-.device-gate > svg {
-  color: #387876;
-}
-.device-gate h1 {
-  font-size: 26px;
-  margin: 0;
-}
-.device-gate p {
-  max-width: 420px;
-  color: #677586;
-}
-.device-gate code {
-  padding: 14px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  color: #3f5873;
+.portal-desktop {
+  height: 100dvh;
+  overflow: hidden;
+  background: #e8edf2;
 }
 .portal-app {
   display: block;
@@ -999,6 +1132,8 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .client-vehicle-photo {
   width: 100%;
@@ -1027,9 +1162,18 @@
 }
 .client-vehicle-body {
   padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .client-vehicle-body h2 {
   font-size: 18px;
+}
+.client-vehicle-body > .section-head {
+  margin-bottom: 12px;
+}
+.client-vehicle-body > .client-rental-reference {
+  margin-block: 0;
 }
 .vehicle-metrics {
   display: grid;
@@ -1052,6 +1196,9 @@
 }
 .client-vehicle-body .actions > .button {
   flex: 1;
+}
+.client-vehicle-body > .actions {
+  margin-top: auto;
 }
 .portal-activity {
   border-top: 1px solid var(--line);
@@ -1158,10 +1305,17 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 .work-order-card h3 {
   font-size: 15px;
   margin: 16px 0 8px;
+}
+.work-order-card > .section-head,
+.inventory-item > .section-head {
+  margin-bottom: 0;
 }
 .work-order-card p {
   color: var(--muted);
@@ -1181,6 +1335,8 @@
   padding-top: 13px;
   font-size: 11px;
   color: #687989;
+  flex-wrap: wrap;
+  margin-top: auto;
 }
 .work-order-meta .badge {
   margin-left: auto;
@@ -1214,14 +1370,17 @@
   border: 1px solid var(--line);
   border-radius: 6px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 .inventory-item h3 {
   font-size: 16px;
-  margin: 18px 0 6px;
+  margin: 16px 0 6px;
 }
 .inventory-item p {
   color: var(--muted);
   font-size: 12px;
+  margin-bottom: 0;
 }
 .shelf-label {
   font-size: 11px;
@@ -1249,6 +1408,9 @@
 .inventory-item .actions > .button {
   flex: 1;
 }
+.inventory-item > .actions {
+  margin-top: auto;
+}
 .portal-app .filters .chat-search {
   margin: 0;
   flex: 1;
@@ -1268,6 +1430,25 @@
   flex-direction: row;
   align-items: center;
   font-size: 13px;
+}
+@media (max-width: 1100px) {
+  :root {
+    --control-height: 44px;
+    --control-height-small: 40px;
+  }
+  .filters:has(input[type="date"]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filters:has(input[type="date"]) > input,
+  .filters:has(input[type="date"]) > select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+  .filters:has(input[type="date"]):not(:has(select)) > input:first-child {
+    grid-column: 1 / -1;
+  }
 }
 @media (max-width: 960px) {
   .fleet-map-layout {
@@ -1294,16 +1475,40 @@
   }
 }
 @media (max-width: 600px) {
+  .page-heading {
+    min-height: 44px;
+    gap: 12px;
+  }
   .page-heading h1 {
     font-size: 23px;
   }
-  .page-heading .actions {
-    justify-content: flex-end;
+  .page-heading .heading-count {
+    margin-left: 3px;
   }
   .button {
     padding: 10px 12px;
     font-size: 12px;
-    min-height: 42px;
+    min-height: var(--control-height);
+  }
+  :root {
+    --section-gap: 20px;
+  }
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .filters:has(input[type="date"]) > select,
+  .filters:has(input[type="date"]) > input:first-child {
+    grid-column: 1 / -1;
+  }
+  .form-footer > .button {
+    flex: 1 1 100px;
+  }
+  .section-head {
+    row-gap: 12px;
+  }
+  .section-head > .segmented {
+    flex-basis: 100%;
   }
   .collection-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1408,7 +1613,7 @@
     font-size: 23px;
   }
   .portal-app .page-heading .button {
-    max-width: 150px;
+    max-width: 100%;
   }
   .portal-summary > div {
     padding: 0 14px;

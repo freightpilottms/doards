@@ -1,6 +1,18 @@
 import { createContext, useContext } from "react";
 import type { Language } from "./types";
 const words: Record<string, [string, string, string]> = {
+  tasks: ["Zadaci", "Aufgaben", "Tasks"],
+  demoSeed: ["Unos demo podataka", "Demodaten importiert", "Demo data imported"],
+  databaseNotConfigured: [
+    "Supabase nije povezan. Dodajte DATABASE_URL u postavke projekta i ponovo objavite aplikaciju.",
+    "Supabase ist nicht verbunden. DATABASE_URL in den Projekteinstellungen setzen und erneut bereitstellen.",
+    "Supabase is not connected. Add DATABASE_URL to the project settings and redeploy.",
+  ],
+  databaseUnavailable: [
+    "Baza trenutno nije dostupna. Provjerite Supabase vezu i da li je migracija izvršena.",
+    "Die Datenbank ist nicht erreichbar. Supabase-Verbindung und Migration prüfen.",
+    "The database is unavailable. Check the Supabase connection and run the migration.",
+  ],
   backendNotConfigured: [
     "Backend nije povezan. Postavite DOARDS_API_ORIGIN na serveru i ponovo pokrenite objavu.",
     "Backend nicht verbunden. DOARDS_API_ORIGIN auf dem Server setzen und erneut bereitstellen.",
@@ -1010,7 +1022,7 @@ export function translate(lang: Language, key: string) {
   return words[key]?.[{ bs: 0, de: 1, en: 2 }[lang]] ?? key;
 }
 export const I18nContext = createContext<{ lang: Language; t: Translator }>({
-  lang: "bs",
-  t: (k) => translate("bs", k),
+  lang: "de",
+  t: (k) => translate("de", k),
 });
 export const useI18n = () => useContext(I18nContext);

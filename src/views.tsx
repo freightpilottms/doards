@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   Plus,
   Download,
+  ChevronDown,
   Package,
   Wrench,
   CalendarDays,
@@ -157,7 +158,7 @@ export function Dashboard() {
   );
   return (
     <>
-      <div className="page-heading">
+      <div className="page-heading dashboard-heading">
         <div>
           <div className="eyebrow">S&S FAHRZEUGVERLEIH</div>
           <h1>
@@ -170,17 +171,20 @@ export function Dashboard() {
           </p>
         </div>
         <div className="heading-actions">
-          <select
-            aria-label={t("period")}
-            value={period}
-            onChange={(e) => setPeriod(e.target.value)}
-          >
-            {["month", "year", "allTime"].map((k) => (
-              <option key={k} value={k}>
-                {t(k)}
-              </option>
-            ))}
-          </select>
+          <div className="dashboard-period">
+            <select
+              aria-label={t("period")}
+              value={period}
+              onChange={(e) => setPeriod(e.target.value)}
+            >
+              {["month", "year", "allTime"].map((k) => (
+                <option key={k} value={k}>
+                  {t(k)}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={16} aria-hidden="true" />
+          </div>
           {["admin", "employee"].includes(data.user.role) && (
             <AddButton
               label={t("newRental")}
@@ -618,8 +622,8 @@ export function Fleet({ filter = "" }: { filter?: string }) {
         </div>
         <div className="actions">
           {can("export") && (
-            <button
-              className="button"
+            <IconButton
+              label={t("export")}
               onClick={() =>
                 downloadCsv("vehicles", rows, [
                   "id",
@@ -637,8 +641,7 @@ export function Fleet({ filter = "" }: { filter?: string }) {
               }
             >
               <Download size={16} />
-              {t("export")}
-            </button>
+            </IconButton>
           )}
           {["admin", "employee"].includes(data.user.role) && (
             <AddButton
@@ -1472,8 +1475,8 @@ export function FinanceReport({ vehicleId }: { vehicleId?: string }) {
             ))}
           </select>
           {can("export") && (
-            <button
-              className="button"
+            <IconButton
+              label={t("export")}
               onClick={() =>
                 downloadCsv("financial-report", rows, [
                   "plate",
@@ -1488,8 +1491,7 @@ export function FinanceReport({ vehicleId }: { vehicleId?: string }) {
               }
             >
               <Download size={16} />
-              {t("export")}
-            </button>
+            </IconButton>
           )}
         </div>
       </div>
@@ -2138,6 +2140,11 @@ export function Settings() {
           />
         </SubmitForm>
       </Section>
+      <p>
+        <a href="/credits.html" target="_blank" rel="noreferrer">
+          {t("imageCredits")}
+        </a>
+      </p>
     </>
   );
 }

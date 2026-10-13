@@ -16,6 +16,7 @@ jer Vercel API mora izvrsavati poslovna pravila i komunicirati sa Supabase bazom
    CRON_SECRET = privatna tajna za dnevni posao
    DOARDS_SECURE_COOKIE = 1
    DOARDS_PRESENTATION = 1 samo za pripremljenu fiktivnu prezentacijsku bazu
+   DOARDS_PUBLIC_DEMO = 1 za javnu prezentaciju bez prijave (samo fiktivni podaci)
 5. Poslije izmjene varijabli pokrenite Redeploy.
 
 StackBlitz prikazuje isti izgradjeni interfejs i koristi API vec objavljenog
@@ -25,6 +26,8 @@ mora imati ispravnu vezu s bazom. Ovaj paket ne zaobilazi prijavu niti gresku ba
 Na Vercelu DOARDS_API_ORIGIN NIJE potreban: tamo se koristi vlastiti API.
 
 Nikada ne stavljajte DATABASE_URL, lozinke ili CRON_SECRET u GitHub/StackBlitz.
+Javni demo omogucava posjetiocima pristup demo ulogama i izmjenu demo podataka.
+Za zatvaranje javnog pristupa postavite DOARDS_PUBLIC_DEMO=0 i ponovo objavite.
 Prije produkcije zamijenite ranije otkrivene lozinke i tajne.
 Postojeci Supabase podaci se ne brisu niti ponovo uvoze ovim paketom.
 Promjene interfejsa rade se u originalnom projektu i zatim se izradjuje novi paket.

@@ -1,152 +1,130 @@
-# DOARDS / S&S Fahrzeugverleih - Release
+# DOARDS: Supabase + Vercel
 
-## Vazno prije objave
+Ovaj release sadrzi vlastiti API na Vercelu i podatke u Supabase PostgreSQL bazi.
+Na Vercelu vise NE koristite `DOARDS_API_ORIGIN`. Supabase URL i anon/publishable
+API kljuc nisu zamjena za `DATABASE_URL` u ovoj serverskoj konfiguraciji.
 
-Ovo je kompletan izvorni paket aplikacije, bez lokalne baze, korisnickih sesija,
-privatnih dokumenata, poslovnih ponuda i tajnih kljuceva.
+## 1. Jedna vrijednost koju trebate dodati lokalno
 
-**Vercel i StackBlitz pokrecu frontend. Node backend mora raditi odvojeno, na
-serveru s trajnim diskom.** Trenutna baza je SQLite, ne Supabase. Samo postavljanje
-Supabase URL-a ili kljuca ne povezuje ovu aplikaciju s tom bazom. Paket ne tvrdi da
-je izvrsena migracija na Supabase niti da je aplikacija vec objavljena.
+Pokrenite `npm run supabase:prepare`. Privatni `.env.supabase` dobija generisane
+lozinke i tajnu za automatizaciju. Postojeca datoteka se nikad ne prepisuje.
 
-```text
-StackBlitz / Vercel frontend
-        /api/* (same-origin proxy, cookies)
-                |
-        HTTPS Node backend (Node 24)
-                |
-        SQLite + privatni prilozi na trajnom disku
-```
+U Supabase projektu `orutyhfslocbsrkbdupw` otvorite **Connect > Transaction pooler**.
+Kopirajte PostgreSQL URI u `DATABASE_URL=` u `.env.supabase`. Zamijenite placeholder
+za lozinku stvarnom **database password**, ne API kljucem. Specijalne znakove u
+lozinci URL-enkodirajte. Host i korisnicko ime preuzmite iz dashboarda, ne pogadjajte ih.
+Nemojte slati lozinku u chat, postavljati je u `src`, niti dodavati prefiks `VITE_`.
 
-Bez javnog HTTPS backend URL-a frontend ce pokazati poruku o nepovezanom serveru.
-Nema lazne uspjesne prijave niti spremanja podataka u privremenu Vercel bazu.
+Generisani vlasnik je `owner@doards.local`. Njegova lozinka je
+`DOARDS_ADMIN_PASSWORD` u privatnoj datoteci; email mozete promijeniti prije uvoza.
 
-## 1. GitHub
+## 2. Prenos trenutnih podataka
 
-1. Kreirajte **private** repozitorij.
-2. U root repozitorija prenesite **sadrzaj ovog foldera**. `package.json`,
-   `vercel.json`, `src`, `api` i `server` moraju biti direktno u rootu.
-3. Ukljucite i skrivene konfiguracijske fajlove: `.stackblitzrc`, `.gitignore`,
-   `.github` i primjere okruzenja. GitHub web upload ih moze izostaviti; Git ili
-   GitHub Desktop su pouzdaniji.
-4. Nikad ne dodajte `.env.local`, `.env.backend`, `data/` ili stvarne kljuceve.
-
-Nije dodijeljena open-source licenca. Ne objavljujte komercijalni kod, brend ili
-slike javno bez odgovarajucih prava; izvori slika su u `public/credits.html`.
-
-## 2. Backend
-
-Potreban je Node 24 server s trajnim diskom i HTTPS adresom, npr. vlastiti VPS
-ili drugi Node/container host koji podrzava persistent volume.
-
-### Docker
+U izvornom projektu na racunaru (gdje se nalazi `data/demo.sqlite`):
 
 ```sh
-cp .env.backend.example .env.backend
-docker compose up -d --build
+npm run supabase:import -- --import data/demo.sqlite --enrich --apply
 ```
 
-Compose vezuje port 4319 samo na localhost. Postavite HTTPS reverse proxy na tom
-serveru prema `127.0.0.1:4319`, uz prosljedjivanje originalnog Host zaglavlja.
-SQLite podaci ostaju u volume-u `doards_data`; jedan backend proces/instanca
-koristi ovu bazu. Nemojte horizontalno skalirati instance s odvojenim bazama.
+Komanda postavlja shemu i transakcijski prenosi zapise, korisnike i audit;
+dopunjava demo samo novim zapisima. Lokalna baza se ne mijenja. Stare sesije se
+NE prenose. Vlasnicki nalog se kreira s lozinkom iz privatne datoteke.
+Odrediste mora biti prazno. Ako tamo postoje podaci, prenos se odbija, bez
+njihovog prepisivanja. Prije prenosa zaustavite unos novih podataka u lokalni demo.
+Nakon uspjesnog prenosa nastavite koristiti cloud ili `npm run dev:supabase`:
+to nije dvosmjerna sinhronizacija dvije nezavisne baze.
 
-### Bez Dockera
+Bez `--apply` komanda samo prikazuje uputu i ne mijenja cloud.
+
+### Alternativa: nova prezentacijska baza
+
+Na praznom Supabase odredistu, umjesto prenosa lokalne baze:
 
 ```sh
-npm ci
-npm run build
-cp .env.backend.example .env.backend
-npm start
+npm run supabase:import -- --demo --apply
 ```
 
-Postavite `DOARDS_DB` na trajni disk. Koristite process manager, HTTPS reverse
-proxy, firewall, redovne backup-e i provjeru oporavka. Prije javnog otvaranja
-izvrsite pocetno kreiranje administratora na zasticenom pristupu, pa provjerite da
-`/api/session` vraca `setup: false`. Ne ostavljajte javno otvoren prvi setup.
+Ovo pravi iskljucivo fiktivne povezane podatke i oznaku `presentation-only`.
+Za ovu varijantu postavite `DOARDS_PRESENTATION=1` na Vercelu. Tek nakon prijave
+lozinkom dozvoljeno je mijenjanje demo profila. Nikad ne ukljucujte ovaj rezim
+nad stvarnim podacima: prezentacijski profili namjerno omogucavaju pregled svih uloga.
 
-**Demo login nije dozvoljen na javnom backendu.** `DOARDS_DEMO=0` ostaje ukljucen
-u produkcijskoj konfiguraciji. Za online prezentaciju koristite izdvojenu bazu
-i stvarne prijavne racune s fiktivnim podacima, uz ogranicen pristup. Lokalni
-demo opisan je u nastavku. Ovaj paket ne iznosi lokalnu demo bazu na internet.
+Prezentacijske prijave su `admin@doards.local`, `employee@doards.local`,
+`mechanic@doards.local`, `warehouse@doards.local`, `accountant@doards.local`,
+`client@doards.local`, `driver@doards.local`. Koriste `DOARDS_DEMO_PASSWORD` iz
+privatne datoteke. Ove lozinke se postavljaju samo kod novog `--demo` uvoza.
+Kod prenosa stare baze demo nalozi zadrzavaju stare hash-eve; pristupite kao
+vlasnik pa postavite lozinke zeljena tri prezentacijska korisnika kroz Users.
 
-## 3. StackBlitz
+## 3. GitHub i Vercel
 
-1. Importujte GitHub repozitorij kao Node/Vite WebContainer projekt.
-2. Postavite `DOARDS_API_ORIGIN=https://vasa-backend-adresa` u `.env.local` ili
-   u odgovarajuce projektne varijable. Ne dodajte `/api` na kraj.
-3. Pokrenite `npm run dev` (automatski kroz `.stackblitzrc`). Restartujte server
-   nakon izmjene varijable.
-4. Za prijavu koristite **Open in new tab** ako browser blokira cookies u iframe-u.
+U GitHub prenesite sadrzaj `release/DOARDS-Supabase`, ili koristite izvorni projekt
+bez `data`, `tmp`, `output`, `outputs`, `release` i privatnih env datoteka.
+Ne kombinujte stari release API proxy s novim API-jem. Stari paket `release/DOARDS`
+je sacuvan radi povratka, ali nije Supabase paket.
 
-StackBlitz ovdje ne pokrece `node:sqlite`. U njemu se pokrecu Vite i API adapter
-prema odvojenom backendu. PWA/service-worker instalacija nije cilj WebContainer
-pregleda; provjerava se na stvarnoj HTTPS adresi.
+Na Vercelu postavite Node **24.x**, build `npm run build`, output `dist`.
+U **Settings > Environment Variables** dodajte:
 
-## 4. Vercel
+| Naziv | Vrijednost |
+| --- | --- |
+| `DATABASE_URL` | Isti Supabase Transaction pooler URI iz privatne datoteke |
+| `CRON_SECRET` | Generisana vrijednost iz `.env.supabase` |
+| `DOARDS_SECURE_COOKIE` | `1` |
+| `DOARDS_PRESENTATION` | `0` za prenesene podatke; `1` samo za novi `--demo` |
 
-1. **Add New > Project > Import Git Repository**.
-2. Root Directory: folder u kojem je ovaj `package.json`.
-3. Framework: **Vite**. Install: `npm ci`. Build: `npm run build`. Output: `dist`.
-4. Node verzija: **24.x**.
-5. Environment Variables: `DOARDS_API_ORIGIN=https://vasa-backend-adresa`.
-   Dodajte za Production i za svaki Preview koji treba pristup tom backendu.
-6. Deploy. Poslije promjene varijabli uradite Redeploy.
+`DOARDS_ADMIN_PASSWORD` i `DOARDS_DEMO_PASSWORD` trebaju samo lokalnoj komandi za
+uvoz, ne Vercelu. Nakon postavljanja varijabli uradite Redeploy. Postavite ih samo
+u pouzdana okruzenja; ne dajte Preview granama pristup stvarnim podacima.
 
-Putanje su `/`, `/clients` i `/workshop`. API funkcija u `api/[...path].mjs`
-prosljedjuje JSON, cookies, prijavu i privatne priloge; baza ne zivi u funkciji.
-Backend URL se ne ugradjuje u browser bundle. Ne koristite `VITE_` prefiks za
-tajne. Nikad ne koristite produkcijske racune/podatke u nepouzdanom Preview-u.
+Ne pokrece se javni setup administratora i nema javne prijave bez lozinke.
+Podaci su u privatnoj shemi **doards**: u Supabase Table Editoru izaberite tu shemu.
+RLS je ukljucen, a browser/anon uloge nemaju pristup. API provjerava korisnicke
+dozvole prije odgovora. Supabase Auth nije uveden: postojeci sistem prijave,
+hash-evi lozinki i sesije sada se cuvaju u PostgreSQL-u.
 
-### Ogranicenja ove konfiguracije
+## 4. StackBlitz
 
-- Na ovom adapteru poruke/obavijesti se osvjezavaju najkasnije pri narednom
-  redovnom provjeravanju, okvirno svakih 8 sekundi dok je stranica aktivna.
-  Stalni SSE stream se ne drzi otvorenim kroz Vercel funkciju.
-- API zahtjev ili odgovor je ogranicen na 4.000.000 bajtova. Za base64 priloge
-  koristite datoteke ispod oko 2,5 MB i pazite na zbir vise priloga.
-  Vercel ima vlastiti limit od 4,5 MB. Za vece fajlove potreban je odvojen
-  object-storage upload, koji ovim releaseom nije implementiran.
-- Periodicni obracun i servisi izvrsavaju se na stalno aktivnom backendu.
-- Ako backend nije konfigurisan ili ne odgovara, prikazuje se jasna greska;
-  ne postoji offline zamjena za bazu.
+StackBlitz sluzi za frontend pregled nakon objave Vercela. Pokrenite
+`npm run dev:stackblitz` i postavite `DOARDS_API_ORIGIN=https://vas-projekt.vercel.app`
+u njegov `.env.local`. To je sada adresa Vercel aplikacije s API-jem, ne drugi VPS.
+Ne dodajte DATABASE_URL ili druge tajne u dijeljeni StackBlitz projekt.
 
-## Lokalni puni demo
+## 5. Provjera poslije objave
 
-Na racunaru s Node 24:
+1. `/api/session` vraca JSON i `setup: false`.
+2. Prijavite se kao vlasnik. Vozila, klijenti, radionica i racuni su popunjeni.
+3. Nova promjena ostaje nakon osvjezavanja i nove objave na Vercelu.
+4. Vozac vidi samo svoje vozilo; klijent svoju flotu; lager i radionica imaju posebna prava.
+5. `/api/cron` bez autorizacije vraca 401; provjerite uspjesan dnevni Cron poziv u Vercelu.
 
-```sh
-npm ci
-npm run dev:full
-```
+## Operativne napomene
 
-Ovo pokrece postojeci puni Node/SQLite demo, automatski kreira lokalnu bazu i sve
-demo uloge. Nije komanda za StackBlitz ili Vercel. Ne izlazite s passwordless
-demo serverom na javni internet. Detalji aplikacije su u `APP_README.md`.
+- Supabase je jedina trajna baza u cloud rezimu. Postojeca sinhrona poslovna
+  pravila rade nad izolovanim memorijskim radnim skupom po zahtjevu; SQLite u tom
+  koraku nema datoteku niti trajne cloud podatke. Promjene se upisuju u PostgreSQL
+  prije slanja odgovora. PostgreSQL transakcijska brava stiti istovremene izmjene.
+- Ovo je kompatibilna migracija postojeceg modela: poslovni zapisi su JSONB redovi,
+  ne jedna JSON datoteka. Korisnici, sesije i audit su posebne tabele. Za veliki
+  broj kompanija/medija treba uvesti ciljana citanja umjesto ucitavanja radnog skupa
+  i nezavisne brave po zakupcu, uz testove kapaciteta.
+- Dokumenti i potpisi ostaju u zasticenim zapisima baze; Supabase Storage bucket
+  nije dio ove migracije. Vercel API ima limit 4 MB po zahtjevu/odgovoru;
+  pojedinacne datoteke neka budu ispod oko 2,5 MB zbog base64 kodiranja.
+- Cloud koristi osvjezavanje poruka/obavijesti svakih oko 8 sekundi, ne trajni SSE.
+- `vercel.json` zakazuje dnevni posao u 05:00 UTC za obracun i servisne rokove.
+  Svaka poslovna promjena takodjer pokrece provjeru. Cesci raspored prilagodite
+  mogucnostima svog Vercel plana. Testirajte Cron nakon stvarne objave.
+- Automatsko izdavanje racuna pocinje tek nakon ukljucenja opcije i popunjavanja
+  firme. U produkciji potvrdite vremensku zonu i poreska pravila. Slanje emailom
+  nije uvedeno ovom migracijom, niti je povezan placeni AI dobavljac.
+- Ne gasite TLS provjeru certifikata. Ako je potreban CA, preuzmite ga iz svog
+  Supabase projekta i unesite PEM u `DATABASE_CA_CERT` lokalno i na Vercelu.
+- Prije stvarnih korisnika: backup/restore proba, testovi kapaciteta, nadzor,
+  sigurnosni pregled i uklanjanje prezentacijskih naloga/podataka.
 
-## Provjera
+## Provjereni izvori
 
-```sh
-npm test
-npm run test:deployment
-npm run build
-```
-
-Smoke provjera nakon stvarnog deploya:
-
-1. `/api/session` vraca JSON, ne HTML, bez `setup: true` na javnoj adresi.
-2. Prijava i odjava rade, a osvjezavanje stranice zadrzava ispravnu sesiju.
-3. Klijent i vozac ne vide tudja vozila ili privatne interne dokumente.
-4. `/clients` i `/workshop` rade na mobilnom/tablet prikazu.
-5. Promjena sa jednog uredjaja stize na drugi kroz redovno osvjezavanje.
-6. Privatni dokument radi samo u ovlastenoj sesiji.
-7. Restart backenda ne brise sacuvane zapise.
-
-## Sluzbeni izvori
-
-- [Vercel i SQLite](https://vercel.com/kb/guide/is-sqlite-supported-in-vercel)
-- [Vercel Node funkcije](https://vercel.com/docs/functions/runtimes/node-js)
-- [Vercel ogranicenja](https://vercel.com/docs/functions/limitations)
-- [StackBlitz konfiguracija](https://developer.stackblitz.com/platform/webcontainers/project-config)
-- [StackBlitz ogranicenja](https://developer.stackblitz.com/platform/webcontainers/troubleshooting-webcontainers)
+- [Supabase connection pooler](https://supabase.com/docs/guides/database/connecting-to-postgres)
+- [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)
+- [Vercel Cron](https://vercel.com/docs/cron-jobs)

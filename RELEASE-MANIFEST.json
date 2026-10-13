@@ -1,76 +1,65 @@
 {
   "product": "DOARDS",
-  "createdAt": "2026-10-12T22:11:23.183Z",
-  "databaseIncluded": false,
+  "database": "Supabase PostgreSQL",
+  "createdAt": "2026-10-13T01:20:13.770Z",
+  "dataIncluded": false,
   "secretsIncluded": false,
   "files": [
     {
-      "path": ".dockerignore",
-      "sha256": "e5378cb7dc7d5644cb2c26aa80092a8c1afec3b759bb3c079f9c3cce83b61993"
-    },
-    {
-      "path": ".env.backend.example",
-      "sha256": "9dc850127a92de6e40acc46dfeadb8e935a59c1ec484f40e1e1d68d92903874e"
-    },
-    {
-      "path": ".env.example",
-      "sha256": "f4f9f51308a7b43079fd6028965fe9b19c9ab08dfc65050cce8f0ab81658d050"
-    },
-    {
-      "path": ".github/workflows/ci.yml",
-      "sha256": "1fef98f48663be1af1b923996c877afa259bed0127d3c8b8007358ac15f6e5a1"
+      "path": ".env.supabase.example",
+      "sha256": "42037cef3c3f76247f9ffce54e0800030e0ee9bc9457e76b33455e1e7cf1d17a"
     },
     {
       "path": ".gitignore",
-      "sha256": "281391eecc2cd45a04f039aef4c23fcdb1e57fbd8f296041be15ca29a7b979d9"
-    },
-    {
-      "path": ".nvmrc",
-      "sha256": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53"
+      "sha256": "1a4d14f7f0322a6bf3a5c95b987186fbb915c317ec76d67956d8cbb8b7e6f93b"
     },
     {
       "path": ".stackblitzrc",
-      "sha256": "83bbd887c89288b413b477c5b82bc09430bd0830f41b5af3c7ac0e135a27be23"
+      "sha256": "d7fb236c36c9c02e511746d428fabba19a5d7dca3a6117e13d15a3e3883c074f"
     },
     {
       "path": "api/[...path].mjs",
-      "sha256": "7fda0041aacf474bebe0dc0e4bbf5feadc5b22c8aa5d9317389d8e6a74be0485"
+      "sha256": "753503b655b143bd14c838e7dc6f5c2e0bc9a57515e1e3f54611d6714ee96419"
     },
     {
-      "path": "APP_README.md",
-      "sha256": "3a40240436af89752c2ee3ed0ba912f20d5150ad692612c9191839ea426f61e8"
+      "path": "deployment/build-brand-icons.mjs",
+      "sha256": "9d90bcdb45205c5de77a70e39a794f39977288b7d3e20ca6457d153981ad5086"
     },
     {
-      "path": "compose.yaml",
-      "sha256": "d4ce9cae5bce9a8748905332c531b188caaa3da5dd45726f0f3fbc90fcb88167"
+      "path": "deployment/create-supabase-release.mjs",
+      "sha256": "09461f86a94f50910fb5ae8bbd1de25c1fde2a03710605c225d8b0a95c8192e5"
     },
     {
-      "path": "deployment/dev.mjs",
+      "path": "deployment/prepare-supabase.mjs",
+      "sha256": "4e2e368cea3f14dee65dba846756f7be72bd72dd821e9f0d5f54601de0f0328d"
+    },
+    {
+      "path": "deployment/release-template/deployment/dev.mjs",
       "sha256": "a608646e72c9a434cbf64807aac744078d5c84a05b0aadcaea6c56bf29e33bb5"
     },
     {
-      "path": "deployment/proxy.mjs",
+      "path": "deployment/release-template/deployment/proxy.mjs",
       "sha256": "3fd2e383854686a0863a61ac687f4d6fe26c22510a9290e5af4579a5efaadbc2"
     },
     {
-      "path": "deployment/proxy.test.mjs",
-      "sha256": "0afd895b9148e4b01414f54652e6da1b1467b185f8c96389d029f0f6e6581ad7"
-    },
-    {
-      "path": "Dockerfile",
-      "sha256": "1c14c36c7c008ac1b5fb39b14e969f063b8a6cb0658aea396d32d093fd660347"
-    },
-    {
       "path": "index.html",
-      "sha256": "34c5bac2f21385e4d789c585627313bbd954e40964e1058a785b30ae50176091"
+      "sha256": "6cd3d1a9fc4eea7a75edc4eb5e1bd09831040554b2b1e18a43cd5ab0dc320ce0"
     },
     {
       "path": "package-lock.json",
-      "sha256": "69edfc9c928fcfd593eca49112bac357643170f880156d7f4a07f6e5a63ba2d5"
+      "sha256": "bb22a119793a567eb36bcbf6cc6da9190db456c92818efc6011dc798e984956c"
     },
     {
       "path": "package.json",
-      "sha256": "19b22f5ee7be56c757f516ed2fe45e039e962330925da1e6ea2cfe09d2c413a8"
+      "sha256": "bd4df5908f0e273208ef5c1b738e6c8ec83e0556c7be0b38d65a62d261da386f"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "sha256": "a9414bbd980da5d964c1bbaf08224df85ff3ee9309a305b4b5c37687b8929901"
+    },
+    {
+      "path": "public/brand-mark.png",
+      "sha256": "4fab82b8434db4811c168979b7177f95b9dd9f176fb2e512b2201ea694fffb30"
     },
     {
       "path": "public/brand-reference.png",
@@ -79,6 +68,26 @@
     {
       "path": "public/credits.html",
       "sha256": "186139b30f2a811324cd32f8e02de586658070ddca1693ce8b924399820945c8"
+    },
+    {
+      "path": "public/doards-icon-192.png",
+      "sha256": "2d1ba6a0f50878b3dac0326b5fa0f21bb7cc5baccecab835710c1cbeaf593ed9"
+    },
+    {
+      "path": "public/doards-icon-512.png",
+      "sha256": "e9f7aab91b35a97df2304af7e0f65603044233a6ce16c55e18b8af56e76a8b50"
+    },
+    {
+      "path": "public/doards-logo.png",
+      "sha256": "febbf4bda9f0f621e06a97006c524c79a666d3c725b033ad34ae45eef87adfb2"
+    },
+    {
+      "path": "public/favicon-16.png",
+      "sha256": "3c6e8ded87c090f719be7653e44737dc7d7b57e184d5672a1a576cc1e2e86341"
+    },
+    {
+      "path": "public/favicon-32.png",
+      "sha256": "1e6589d771fe029806346b5b4bfb60836c9fa39ad5e3e1042f6cea7d251bcd3b"
     },
     {
       "path": "public/icon-192.png",
@@ -94,7 +103,7 @@
     },
     {
       "path": "public/manifest.webmanifest",
-      "sha256": "4e9058b08e30e3eb9dc4c5effa9b4658c0aea952c6260fd47eab0992df055c49"
+      "sha256": "18ccc2c62cda76229104c35d1cfa729a642ba6a59646bff8d2020bc5ab8e3d04"
     },
     {
       "path": "public/offline.html",
@@ -102,7 +111,7 @@
     },
     {
       "path": "public/sw.js",
-      "sha256": "575b00af95011e330541543d1896926b9179fee431bc11cf58705ef1a287dbd3"
+      "sha256": "1fa77bbd86ab3225145dd1901d90ed32cfbca3678668478787c6bc6180474c94"
     },
     {
       "path": "public/vehicle-bmw.jpg",
@@ -114,11 +123,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "0bdf24d43f5698b997bf42c3388244c291aab354f19205b1ef6c48053c7f3d38"
-    },
-    {
-      "path": "REQUIREMENTS.md",
-      "sha256": "7b76be10812b66d84f0c255bebbeae6fd627f51ae399a960f673fca005fbcddb"
+      "sha256": "8a424255cc5d83260f246dfd56471bbe9339ea5adedf78a88819e073cbf8622f"
     },
     {
       "path": "server/assistant.mjs",
@@ -137,12 +142,16 @@
       "sha256": "b27c34e5d55850f375d47c30699ef71aefed68084133bccfb3abe6803cfe3511"
     },
     {
+      "path": "server/cloud-server.mjs",
+      "sha256": "964cca0902bba1f04674760c9c6c9e411f057b26370f5869a7fce058b4a8f7f6"
+    },
+    {
       "path": "server/demo.mjs",
-      "sha256": "c1567fa5fb53aa81c5f538d2e64d5234b322176b4b35cf03ca753c4bc30552e7"
+      "sha256": "084bebeb8ad9ddfc0a289df921366e2f1df9c29be531a06d037ae7893137d925"
     },
     {
       "path": "server/dev.mjs",
-      "sha256": "baa86b496f9659fea26010fbafbf34e0db5ef41fbd7d65ec6b931fe42428ce72"
+      "sha256": "cded9f2a81d2c47f207498d216924fba7027834b417e28a500d9d23f2f26b734"
     },
     {
       "path": "server/domain.mjs",
@@ -158,15 +167,31 @@
     },
     {
       "path": "server/index.mjs",
-      "sha256": "f6a7679baef2149080b3a10bbc974b87d96ca65705335dee2ca2211b63144582"
+      "sha256": "d2f133cfbf47516330ad9883f968ad1131752c0dc38cab1d48ac3a1be808b29e"
     },
     {
       "path": "server/intelligence.test.mjs",
       "sha256": "af0b332501f3be03bf32a740f60b6b30caea67c239c229d73227ba715269f97c"
     },
     {
+      "path": "server/migrate-supabase.mjs",
+      "sha256": "642c1a1a41bdd6df38c18258d03042039eab25edcb4a517d056773905d5438c2"
+    },
+    {
       "path": "server/portals.test.mjs",
       "sha256": "51dd7e5c01f5592a789d4f150638cd4ffb865c235d466c94e53db1ae863b9892"
+    },
+    {
+      "path": "server/postgres.mjs",
+      "sha256": "240ba68f01289d28f0f3d183cced1515f66f314115f93f4f72b803c1a56f630d"
+    },
+    {
+      "path": "server/postgres.test.mjs",
+      "sha256": "39105e47480ead7fa883f5aacdc7b20f07a3f26b375014ef03e309010f29e2d8"
+    },
+    {
+      "path": "server/presentation.mjs",
+      "sha256": "90d0b1f5f88b46ba4f0bef976cb3420a6a7f78d6e760966a72fd0740b0da356d"
     },
     {
       "path": "server/seed.mjs",
@@ -182,7 +207,7 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "7ca55ea91c4ec57a2b8f720af09ce1ada45ee9d2325ddc892c15d8ec834d121d"
+      "sha256": "923e572fb1ba0fab5e73756d2d64a7847042a16281cd751df01d8f4c8eb9d2e3"
     },
     {
       "path": "src/Collaboration.tsx",
@@ -202,7 +227,7 @@
     },
     {
       "path": "src/i18n.tsx",
-      "sha256": "d5f8dde7f4ebda594ee8fc1a87edef2ff66df5035c875702b4efce7c00027ee9"
+      "sha256": "b3e01e5a6497a6c2277660e91f15ba514e10da13f4ffeea0b2f81f54d6fc2a85"
     },
     {
       "path": "src/Intelligence.tsx",
@@ -214,11 +239,11 @@
     },
     {
       "path": "src/Portals.tsx",
-      "sha256": "6f0613e31d34b7c0097d20b84fb4027cd552fd446b7c55746c5143fde0698c98"
+      "sha256": "cad8d4cbb1d69150ead29bb6697f9834fa8a394c14391cfa6a5c28f697c29ab3"
     },
     {
       "path": "src/styles.css",
-      "sha256": "2982a29c841e6ff7ea976f7e5e93dd4081304fcead6e395c478f270c8414574b"
+      "sha256": "c603e0b79582a2a075733b6d29f03b11f305fa8c3776015b49e90815067284dc"
     },
     {
       "path": "src/types.ts",
@@ -226,7 +251,7 @@
     },
     {
       "path": "src/ui.tsx",
-      "sha256": "66f994a539fbb499c21dd2831d7eb73b45403ec2e97da8c282dadaa3ea2f55d5"
+      "sha256": "df93f343f261aaf8ebde4fb7e3fa78788c2f9b653d922333ae29b4b78f7940e7"
     },
     {
       "path": "src/utils.ts",
@@ -238,27 +263,59 @@
     },
     {
       "path": "src/views.tsx",
-      "sha256": "e27cc9337b9d5416ba662b1f7d5f6e0e80c8c157b22c2aca0b80dba3d399cb51"
+      "sha256": "856639da5044b22036f98648504eb1489c156846c86379d5f478baa0eb281f77"
     },
     {
       "path": "src/workspaces.css",
-      "sha256": "9fbff67f8c50779cb50cc620782418faab4591321c44e441e396ab97a21635fb"
+      "sha256": "02b58404684b5b4d72a8e45919a4db704ce1f32a0f34b8a1ea0bddba2b4a72d3"
+    },
+    {
+      "path": "supabase/migrations/001_doards.sql",
+      "sha256": "c34bf9eba3e102c3d52c8d68749039e87fdbaa4210df026aa7024537d3ea0ead"
+    },
+    {
+      "path": "SUPABASE_SETUP.md",
+      "sha256": "8a424255cc5d83260f246dfd56471bbe9339ea5adedf78a88819e073cbf8622f"
+    },
+    {
+      "path": "tests/branding.mjs",
+      "sha256": "b4d194dbfec9bd01f3c85cab48a39a10acfaaa0a65902fea609d5b12e5b265de"
     },
     {
       "path": "tests/client-demo.mjs",
-      "sha256": "4680e9188a941f121f96e1cabc80c757dc637247984f98fcb4669249be1651d1"
+      "sha256": "cb24fc70e836b5f6508ad5ff65369289e46d115cac94081f7bb455d53d155b26"
+    },
+    {
+      "path": "tests/cloud-e2e.mjs",
+      "sha256": "9b9dd950855ad7d7fa2ac7ed8fa310635fdd858ee3cac855b0b2ebfe80c713ac"
+    },
+    {
+      "path": "tests/dashboard-heading.mjs",
+      "sha256": "fbd586564a9e9051b7040085afe835bd98c04339d8bbd7f5fd41a225c3a9214e"
+    },
+    {
+      "path": "tests/desktop-portals.mjs",
+      "sha256": "5f8cc6d3729712ce719f886ecb47418fa83a20a0c77c4a8b6502e9a596051d2c"
     },
     {
       "path": "tests/e2e.mjs",
-      "sha256": "2d54eb152d6cb0ec0802268de74823d82b139a6559a23ab38a7b7c491a772bfe"
+      "sha256": "130527949ed951caadd15a40144a0b2d1a22180cbf56480676afcdfe202f64c2"
     },
     {
       "path": "tests/intelligence.mjs",
-      "sha256": "448954903f46b7af95b3ec125ded0b0dbfa388f5a77f5754196edb318a3d7d63"
+      "sha256": "ae85e154b98b9b8ff568459e70aa366199f9c31e343f08821dd9b58905cbce45"
+    },
+    {
+      "path": "tests/language-default.mjs",
+      "sha256": "e767964c1138ace8345b5fc2122baeeb5e9f1ecc0bb0e294a0fbfc0625775a82"
+    },
+    {
+      "path": "tests/layout.mjs",
+      "sha256": "008c4581cc8863b229509b912bb9f756c852bcf601380d42052b57a0f6f94ac0"
     },
     {
       "path": "tests/portals.mjs",
-      "sha256": "097ddb51987fb4c702daa537cfc978546ecb5536f01005dbd7fc6cd623637898"
+      "sha256": "6aa578dbed6265cb3a5df3c8397b5f453be2c5351c1b6db735543c02b8a7e15f"
     },
     {
       "path": "tsconfig.json",
@@ -270,7 +327,7 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "82c34e01634c74042ba5fbb7fc27e6e769f032f4a8d335a0503c86eb7011e11a"
+      "sha256": "3c31b135ecba1f212918465ff0d147218c0db21d9a304ec8ebc8c6ff2b862664"
     },
     {
       "path": "vite.config.ts",

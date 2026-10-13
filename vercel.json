@@ -4,7 +4,8 @@
   "buildCommand": "npm run build",
   "installCommand": "npm ci",
   "outputDirectory": "dist",
-  "functions": { "api/[...path].mjs": { "maxDuration": 30 } },
+  "functions": { "api/[...path].mjs": { "maxDuration": 60 } },
+  "crons": [{ "path": "/api/cron", "schedule": "0 5 * * *" }],
   "rewrites": [
     { "source": "/clients/:path*", "destination": "/index.html" },
     { "source": "/workshop/:path*", "destination": "/index.html" }

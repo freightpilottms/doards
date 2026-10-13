@@ -40,11 +40,17 @@ export async function createApp({
   demo = process.env.DOARDS_DEMO === "1",
   dev = false,
   demoLanSubnet = "",
+  store,
+  scheduler = true,
+  initialize = true,
+  setupEnabled = true,
+  demoLoginAuthorized,
+  maxBodyBytes = 24_000_000,
 } = {}) {
-  const s = createStore(dbPath);
+  const s = store || createStore(dbPath);
   const initialized =
     s.db.prepare("SELECT COUNT(*) AS n FROM users").get().n > 0;
-  if (!initialized && demo) {
+  if (initialize && !initialized && demo) {
     s.transaction(() => {
       for (const [kind, records] of Object.entries(seed()))
         for (const r of records) s.put(kind, r);
@@ -57,7 +63,7 @@ export async function createApp({
             `demo-${role}`,
             `${role}@doards.local`,
             {
-              admin: "Max Mustermann",
+              admin: "Admir",
               employee: "Marta Keller",
               mechanic: "Adnan Kovač",
               warehouse: "Lukas Weber",
@@ -71,22 +77,24 @@ export async function createApp({
           );
     });
   }
-  if (demo) enrichDemo(s);
+  if (initialize && demo) enrichDemo(s);
   const attempts = new Map();
   const streams = new Set();
   const broadcast = () => {
     for (const client of streams)
       client.res.write("event: change\ndata: {}\n\n");
   };
-  runAutomation(s);
-  const automationTimer = setInterval(() => {
-    try {
-      if (runAutomation(s)) broadcast();
-    } catch (e) {
-      console.error("Automation failed", e.message);
-    }
-  }, 60000);
-  automationTimer.unref();
+  if (scheduler) runAutomation(s);
+  const automationTimer = scheduler
+    ? setInterval(() => {
+        try {
+          if (runAutomation(s)) broadcast();
+        } catch (e) {
+          console.error("Automation failed", e.message);
+        }
+      }, 60000)
+    : null;
+  automationTimer?.unref();
   const aiLimits = new Map();
   const respond = (res, status, data) => {
     res.writeHead(status, {
@@ -97,10 +105,21 @@ export async function createApp({
     res.end(JSON.stringify(data));
   };
   const body = async (req) => {
+    if (req.body !== undefined) {
+      const raw =
+        typeof req.body === "string" ? req.body : JSON.stringify(req.body);
+      if (Buffer.byteLength(raw) > maxBodyBytes)
+        throw new DomainError("fileTooLarge", 413);
+      try {
+        return JSON.parse(raw);
+      } catch {
+        throw new DomainError("invalidJson");
+      }
+    }
     let raw = "";
     for await (const chunk of req) {
       raw += chunk;
-      if (Buffer.byteLength(raw) > 24_000_000)
+      if (Buffer.byteLength(raw) > maxBodyBytes)
         throw new DomainError("fileTooLarge", 413);
     }
     try {
@@ -154,7 +173,7 @@ export async function createApp({
     );
   };
   let vite = null;
-  const server = http.createServer(async (req, res) => {
+  const handler = async (req, res) => {
     try {
       const url = new URL(req.url, "http://localhost");
       if (url.pathname.startsWith("/api/")) {
@@ -180,8 +199,9 @@ export async function createApp({
                   apps: appAccess(u),
                 }
               : null,
-            demo,
+            demo: demo && (!demoLoginAuthorized || !!u),
             setup:
+              setupEnabled &&
               s.db.prepare("SELECT COUNT(*) AS n FROM users").get().n === 0,
           });
         }
@@ -204,13 +224,16 @@ export async function createApp({
             if (
               !demo ||
               !roles.includes(p.role) ||
-              !demoAddressAllowed(ip, dev ? demoLanSubnet : "")
+              !(demoLoginAuthorized
+                ? demoLoginAuthorized(req, userFor(req))
+                : demoAddressAllowed(ip, dev ? demoLanSubnet : ""))
             )
               throw new DomainError("forbidden", 403);
             u = s.db
               .prepare("SELECT * FROM users WHERE id=?")
               .get(`demo-${p.role}`);
           } else if (url.pathname === "/api/setup") {
+            if (!setupEnabled) throw new DomainError("forbidden", 403);
             if (s.db.prepare("SELECT COUNT(*) AS n FROM users").get().n)
               throw new DomainError("forbidden", 403);
             if (!p.name || !p.email || String(p.password || "").length < 12)
@@ -441,7 +464,8 @@ export async function createApp({
         error: e instanceof DomainError ? e.message : "serverError",
       });
     }
-  });
+  };
+  const server = http.createServer(handler);
   if (dev)
     vite = await (
       await import("vite")
@@ -451,6 +475,7 @@ export async function createApp({
     });
   return {
     server,
+    handler,
     store: s,
     close: async () => {
       clearInterval(automationTimer);
@@ -461,8 +486,13 @@ export async function createApp({
     },
   };
 }
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const app = await createApp();
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  const app = process.env.DATABASE_URL
+    ? await (await import("./cloud-server.mjs")).createCloudServer()
+    : await createApp();
   const host = process.env.DOARDS_HOST || "127.0.0.1";
   if (process.env.DOARDS_DEMO === "1" && host !== "127.0.0.1")
     throw new Error("Demo mode must bind to loopback.");

@@ -1,7 +1,11 @@
 import { day } from "./seed.mjs";
+import { enrichPresentation } from "./presentation.mjs";
 
 // Additive, versioned demo content: existing records and user edits are never reset.
 export function enrichDemo(s) {
+  s.db
+    .prepare("UPDATE users SET name=? WHERE id=? AND name=?")
+    .run("Admir", "demo-admin", "Max Mustermann");
   const vito = s.get("vehicles", "V-002");
   if (vito && !Object.keys(vito.photos || {}).length)
     s.put("vehicles", {
@@ -12,6 +16,7 @@ export function enrichDemo(s) {
   if (s.get("meta", "demo-content-v2")) {
     enrichIntelligenceDemo(s);
     enrichClientDemo(s);
+    enrichPresentation(s);
     return;
   }
   const at = (offset, hour = 9) =>
@@ -406,6 +411,7 @@ export function enrichDemo(s) {
   });
   enrichIntelligenceDemo(s);
   enrichClientDemo(s);
+  enrichPresentation(s);
 }
 function enrichClientDemo(s) {
   if (s.get("meta", "demo-clients-v1")) return;

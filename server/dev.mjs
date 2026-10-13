@@ -1,10 +1,12 @@
 import { createApp } from "./index.mjs";
-const app = await createApp({
-  dev: true,
-  demo: true,
-  demoLanSubnet: process.env.DOARDS_DEMO_LAN_SUBNET || "",
-  dbPath: process.env.DOARDS_DB || "data/demo.sqlite",
-});
+const app = process.env.DATABASE_URL
+  ? await (await import("./cloud-server.mjs")).createCloudServer({ dev: true })
+  : await createApp({
+      dev: true,
+      demo: true,
+      demoLanSubnet: process.env.DOARDS_DEMO_LAN_SUBNET || "",
+      dbPath: process.env.DOARDS_DB || "data/demo.sqlite",
+    });
 let port = Number(process.env.PORT || 5173);
 const host = process.env.DOARDS_HOST || "127.0.0.1";
 app.server.on("error", (e) => {

@@ -45,6 +45,7 @@ export async function createApp({
   initialize = true,
   setupEnabled = true,
   demoLoginAuthorized,
+  publicDemo = false,
   maxBodyBytes = 24_000_000,
 } = {}) {
   const s = store || createStore(dbPath);
@@ -200,6 +201,7 @@ export async function createApp({
                 }
               : null,
             demo: demo && (!demoLoginAuthorized || !!u),
+            publicDemo: demo && publicDemo,
             setup:
               setupEnabled &&
               s.db.prepare("SELECT COUNT(*) AS n FROM users").get().n === 0,

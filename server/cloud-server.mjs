@@ -111,11 +111,13 @@ export function createCloudHandler({
           const app = await createApp({
             store: s,
             demo: presentation,
+            publicDemo: presentation && env.DOARDS_PUBLIC_DEMO === "1",
             initialize: false,
             scheduler: false,
             setupEnabled: false,
             maxBodyBytes: MAX_BYTES,
             demoLoginAuthorized: (_req, user) =>
+              (presentation && env.DOARDS_PUBLIC_DEMO === "1") ||
               !!user?.id?.startsWith("demo-"),
           });
           const buffer = new BufferedResponse();

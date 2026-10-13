@@ -90,11 +90,10 @@ try {
   ).json();
   assert.equal(board.user.id, "demo-admin");
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.getByRole("button", { name: "Tablet demo", exact: true }).click();
-  const frame = page.frameLocator(".portal-demo-frame");
+  const frame = page.frameLocator(".portal-mobile-frame");
   await frame.locator(".client-vehicle").waitFor();
   await page.screenshot({
-    path: "tmp/client-demo-qa/desktop-tablet-preview.png",
+    path: "tmp/client-demo-qa/desktop-mobile-app.png",
     fullPage: true,
   });
   assert.deepEqual(errors, []);

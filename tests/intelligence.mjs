@@ -11,7 +11,6 @@ const errors = [];
 async function login(role, surface, width) {
   const c = await browser.newContext({ viewport: { width, height: 900 } });
   await c.addInitScript(() => {
-    localStorage.setItem("doards:language", "en");
     window.SpeechRecognition = class {
       start() {
         window.__speechLang = this.lang;
@@ -38,6 +37,7 @@ async function login(role, surface, width) {
   p.setDefaultTimeout(10000);
   p.on("pageerror", (e) => errors.push(e.message));
   await p.goto(origin + (surface === "board" ? "/" : "/" + surface));
+  await p.locator(".language-select select").selectOption("en");
   await p.locator("main h1").waitFor();
   return { c, p };
 }

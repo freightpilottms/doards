@@ -60,9 +60,10 @@ async function sign() {
 }
 try {
   await page.goto(origin);
+  await page.locator(".language-select select").selectOption("bs");
   await button("Otvori demo").click();
-  await page.getByRole("heading", { name: "Dobar dan, Max." }).waitFor();
-  await page.getByLabel("Jezik", { exact: true }).selectOption("en");
+  await page.getByRole("heading", { name: "Dobar dan, Admir." }).waitFor();
+  await page.locator(".language-select select").selectOption("en");
   await command("settings.save", {
     name: "QA S&S",
     address: "Teststraße 1, Wien",
@@ -248,6 +249,7 @@ try {
   await ctx.request.post(origin + "/api/logout", { data: {} });
   await ctx.request.post(origin + "/api/demo", { data: { role: "driver" } });
   await page.goto(origin+'/clients');
+  await page.locator(".language-select select").selectOption("en");
   await page.getByRole("heading", { name: /Hello, Amir/ }).waitFor();
   let driverState = await state();
   assert.deepEqual(

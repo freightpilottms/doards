@@ -17,7 +17,6 @@ const contexts = [];
 async function context(role, surface, width = 390) {
   const c = await browser.newContext({ viewport: { width, height: 900 } });
   contexts.push(c);
-  await c.addInitScript(() => localStorage.setItem("doards:language", "en"));
   const login = await c.request.post(origin + "/api/demo", {
     headers: { "X-DOARDS-App": surface },
     data: { role },
@@ -27,6 +26,7 @@ async function context(role, surface, width = 390) {
   p.on("pageerror", (e) => errors.push(e.stack || e.message));
   p.setDefaultTimeout(10000);
   await p.goto(origin + (surface === "board" ? "/" : "/" + surface));
+  await p.locator(".language-select select").selectOption("en");
   await p.locator("main").waitFor();
   return { c, p, surface };
 }
@@ -215,6 +215,7 @@ try {
     data: { role: "mechanic" },
   });
   await workshop.p.reload();
+  await workshop.p.locator(".language-select select").selectOption("en");
   await workshop.p.locator("main").waitFor();
   await workshop.p
     .locator(".portal-bottom-nav")
@@ -246,6 +247,7 @@ try {
   });
   assert.equal(blocked.status(), 403);
   await workshop.p.goto(origin + "/clients");
+  await workshop.p.locator(".language-select select").selectOption("en");
   await workshop.p.getByRole("heading", { name: "Hello, Adnan." }).waitFor();
   assert.deepEqual(
     (
@@ -259,12 +261,11 @@ try {
   );
   await workshop.p.setViewportSize({ width: 1440, height: 900 });
   await workshop.p
-    .getByText(
-      "This app is available on phones and tablets. Open this address on your device.",
-    )
+    .frameLocator(".portal-mobile-frame")
+    .locator("main")
     .waitFor();
-  assert.equal(await workshop.p.locator("main").count(), 0);
-  await shot(workshop.p, "desktop-gate");
+  assert.equal(await workshop.p.locator(".device-gate").count(), 0);
+  await shot(workshop.p, "desktop-mobile-app");
   for (const name of [
     "Overview",
     "Fleet",
@@ -342,7 +343,7 @@ try {
   }
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: live cross-app chat + attachments, private channels, notifications, independent permissions, dual access, desktop gate, 21 board screens and 3 languages at 320/390/820px",
+    "PASS: live cross-app chat + attachments, private channels, notifications, independent permissions, dual access, desktop mobile app, 21 board screens and 3 languages at 320/390/820px",
   );
 } catch (e) {
   for (let i = 0; i < contexts.length; i++)

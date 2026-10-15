@@ -298,7 +298,12 @@ export async function createApp({
               : cookieFor(req).name,
             !!scopedDemo && (!sharedSession || sharedSession.userId === u.id),
           );
-          return respond(res, 200, { ok: true });
+          return respond(res, 200, {
+            ok: true,
+            ...(url.pathname === "/api/demo" && p.includeState
+              ? { state: snapshot(s, surfaceUser(u, requestedSurface)) }
+              : {}),
+          });
         }
         if (url.pathname === "/api/telemetry" && req.method === "POST") {
           const expected = process.env.DOARDS_GPS_TOKEN,
